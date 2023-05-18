@@ -16,12 +16,12 @@ Asteroids è un videogioco arcade a grafica vettoriale, quindi immagini basate s
 Lo scopo del gioco asteroids è quello di guidare una navicella spaziale evitando i detriti cosmici distruggendoli e evitando i saucer, le navicelle spaziali aliene nemiche, aprendoti la via con il fuoco! Il gameplay dal punto di vista pratico risulta identico alla versione originale del gioco sviluppato da Atari. Il player si muove in un mondo 2D ruotando la navicella e utilizzando il thrust per spingerla avanti nello spazio. La rotazione può essere effettuata tramite i tasti [A][D][←][→], mentre il thrust è definito dai tasti [W][↑], per sparare invece si utilizza il tasto [ ].
 
 ### Scoring System
-Il sistema dei punteggi è strutturato nel seguente modo:
-  -Large asteroid = 20pt
-  -Medium asteroid = 50pt
-  -Small asteroid = 100pt
-  -Large saucer = 200pt
-  -Small saucer = 1000pt
+#### Il sistema dei punteggi è strutturato nel seguente modo:
+  Large asteroid = 20pt
+  Medium asteroid = 50pt
+  Small asteroid = 100pt
+  Large saucer = 200pt
+  Small saucer = 1000pt
   
 ### Collision System
 Il sistema delle collisioni è strutturato nel seguente modo:
