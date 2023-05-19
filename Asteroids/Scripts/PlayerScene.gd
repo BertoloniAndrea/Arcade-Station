@@ -5,6 +5,7 @@ export var max_speed := 10.0
 export var rotation_speed := 3.5
 export var linear_velocity := 100.0
 export var friction_factor := 0.1
+export var shot_cooldown := 125
 enum Rotation {LEFT, NONE, RIGHT}
 
 var input_vector := Vector2.ZERO 
@@ -71,16 +72,14 @@ func accelerate(delta):
 	velocity.limit_length(max_speed)
 
 func decelerate(delta):
-	if (abs(velocity.length()) < 0.0001):
+	if (velocity.length() < 0.0001):
 		velocity = Vector2.ZERO
 	velocity = lerp(velocity, Vector2.ZERO, friction_factor * delta) # linearly interpolate speed to zero
 
-func shoot ():
-	var bullet = bullet_scene.instance()
+func shoot():
+	var bullet = bullet_scene.instance() as Bullet
 	bullet.set_rotation(rotation)
-	shootSound.play()
+	bullet.set_position(position + get_node("Sprite").get_texture().get_size() / 2)
 	get_tree().root.add_child(bullet)
-	#bullet.linear_velocity = direction * shotSpeed + velocity
-	#bullet.global_position = global_position + (direction * 38)
-	#$Timer.start(shotCooldown)
-	pass
+	shootSound.play()
+	$Timer.start(shot_cooldown)
