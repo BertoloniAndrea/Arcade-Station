@@ -39,7 +39,7 @@ func on_body_entered(body):
 func on_destroy(body_rotation = rotation):
 	queue_free()
 	if (scale_value > 0):
-		emit_signal("on_asteroid_destroyed", scale_value, position, body_rotation)
+		emit_signal("on_asteroid_destroyed", scale_value - 1, position, body_rotation)
 
 func _on_area_entered(area):
 	if area is Bullet:
