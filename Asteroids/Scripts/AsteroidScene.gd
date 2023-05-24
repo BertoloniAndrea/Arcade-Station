@@ -44,3 +44,9 @@ func on_destroy():
 
 	
 	
+
+
+func _on_area_entered(area):
+	queue_free()
+	if (scale_value > 0):
+		emit_signal("on_asteroid_destroyed", scale_value - 1, position, rotation)
