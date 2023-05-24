@@ -25,12 +25,6 @@ wait_time = 5.0
 
 [node name="Node" parent="." instance=ExtResource( 4 )]
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-rotation = 3.14159
-polygon = PoolVector2Array( -18, 30, 0, -30, 18, 30 )
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 rotation = 3.14159
 polygon = PoolVector2Array( -18, 30, 0, -30, 18, 30 )

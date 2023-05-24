@@ -8,8 +8,8 @@
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 600, 300 )
 rotation = 3.14159
-max_speed = 20.0
-linear_velocity = 5.0
+max_speed = 15.0
+linear_velocity = 7.0
 friction_factor = 0.2
 
 [node name="Node" parent="." instance=ExtResource( 2 )]

@@ -33,20 +33,15 @@ func set_texture(asteroid_texture):
 
 func on_body_entered(body):
 	if body is Player:
-		#body.queue_free()
+		body.queue_free()
 		on_destroy() 
-	pass # Replace with function body.
 
-func on_destroy():
+func on_destroy(body_rotation = rotation):
 	queue_free()
 	if (scale_value > 0):
-		emit_signal("on_asteroid_destroyed", scale_value - 1, position, rotation)
-
-	
-	
-
+		emit_signal("on_asteroid_destroyed", scale_value, position, body_rotation)
 
 func _on_area_entered(area):
-	queue_free()
-	if (scale_value > 0):
-		emit_signal("on_asteroid_destroyed", scale_value - 1, position, rotation)
+	if area is Bullet:
+		area.queue_free()
+		on_destroy(area.rotation)
