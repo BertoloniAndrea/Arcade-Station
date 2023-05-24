@@ -20,7 +20,7 @@ func initWrapArea():
 # When node ready, set the inital wrap area if not set
 func _ready():
 	var sprite = get_parent().get_node("Sprite")
-	spriteSize = sprite.get_texture().get_size()
+	spriteSize = sprite.get_texture().get_size() * sprite.scale
 	halfSpriteSize = spriteSize / 2
 	initWrapArea()
 
