@@ -132,10 +132,10 @@ func addMirror(axis, mirrorOffset):
 	var mirrorSprite = Sprite.new()
 	mirrorSprite.name = axis
 	mirrorSprite.texture = texture
-	mirrorSprite.position = Vector2(position.x + mirrorOffset[0], position.y + mirrorOffset[1])
+	mirrorSprite.position = Vector2.ZERO #Vector2(position.x + mirrorOffset[0], position.y + mirrorOffset[1])
 	mirrorSprite.rotation = rotation
-	#mirrorSprite.offset = mirrorOffset
-	get_node("MainScene").add_child(mirrorSprite)
+	mirrorSprite.offset = mirrorOffset
+	add_child(mirrorSprite)
 
 # The special case to create the copy in a diagnal of the Sprite, if both
 # Horizontal and Vertical positions are set.

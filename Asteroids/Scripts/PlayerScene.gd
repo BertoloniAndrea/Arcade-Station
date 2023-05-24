@@ -1,10 +1,10 @@
 extends KinematicBody2D
 class_name Player
 
-export var max_speed := 10.0
-export var rotation_speed := 3.5
-export var linear_velocity := 100.0
-export var friction_factor := 0.1
+export var max_speed := 100.0
+export var rotation_speed := 2.5
+export var linear_velocity := 20.0
+export var friction_factor := 0.5
 export var shot_cooldown := 125
 enum Rotation {LEFT, NONE, RIGHT}
 
@@ -65,21 +65,22 @@ func _physics_process(delta):
 		accelerate(delta)
 	elif (input_vector.y == 0 and velocity != Vector2.ZERO):
 		decelerate(delta)
-	move_and_slide(velocity)
+	move_and_collide(velocity)
 	
 func accelerate(delta):
 	velocity += (input_vector * linear_velocity * delta).rotated(rotation)
 	velocity.limit_length(max_speed)
 
 func decelerate(delta):
-	if (velocity.length() < 0.0001):
+	if (velocity.length() < 0.001):
 		velocity = Vector2.ZERO
 	velocity = lerp(velocity, Vector2.ZERO, friction_factor * delta) # linearly interpolate speed to zero
 
 func shoot():
-	var bullet = bullet_scene.instance() as Bullet
-	bullet.set_rotation(rotation)
-	bullet.set_position(position + get_node("Sprite").get_texture().get_size() / 2)
-	get_tree().root.add_child(bullet)
-	shootSound.play()
-	$Timer.start(shot_cooldown)
+	pass
+#	var bullet = bullet_scene.instance() as Bullet
+#	bullet.set_rotation(rotation)
+#	bullet.set_position(position + get_node("Sprite").get_texture().get_size() / 2)
+#	get_tree().root.add_child(bullet)
+#	shootSound.play()
+#	$Timer.start(shot_cooldown)
