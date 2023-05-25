@@ -13,8 +13,6 @@ var scale_value
 const Utils = preload("res://Scripts/Utils/AsteroidSize.gd")
 
 func _ready():
-	var x = (randf() * 2) - 1
-	var y = (randf() * 2) - 1
 	asteroid_sprite = get_node("Sprite")
 	asteroid_collision_shape = get_node("CollisionShape2D")
 	asteroid_sprite.scale = Vector2(scale_value + 1, scale_value + 1)
@@ -22,10 +20,6 @@ func _ready():
 func _process(delta):
 	asteroid_sprite.rotation += (PI/180) * rotation_factor * delta
 	position += (speed * vertical_movement / asteroid_sprite.scale * delta).rotated(rotation)
-	pass
-
-func _physics_process(delta):
-	#if is_on_wa;;
 	pass
 	
 func set_texture(asteroid_texture):

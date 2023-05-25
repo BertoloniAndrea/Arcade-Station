@@ -61,7 +61,6 @@ func spawn_asteroid(size, position: Vector2, rotation, texture: Texture):
 	asteroid.set_texture(texture)
 	asteroid.scale_value = size
 	asteroid.connect("on_asteroid_destroyed", self, "on_asteroid_destroyed")
-	#asteroid.get_node("Sprite").scale = Vector2(, )
 	add_child(asteroid)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

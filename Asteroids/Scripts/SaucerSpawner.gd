@@ -16,10 +16,9 @@ func _ready():
 	top_path = get_node("Path Top/PathFollow2D")
 	bottom_path = get_node("Path Bottom/PathFollow2D")
 	
-	
 	spawn_saucer()
 	rng.randomize()
-	#saucer_timer.connect("timeout", self, "spawn_saucer")
+	saucer_timer.connect("timeout", self, "spawn_saucer")
 	
 func spawn_saucer():
 	var saucer = saucer_scene.instance() as Saucer

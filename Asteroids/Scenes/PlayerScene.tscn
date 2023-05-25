@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Shooting.gd" type="Script" id=5]
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+scale = Vector2( 0.75, 0.75 )
 collision_mask = 30
 script = ExtResource( 2 )
 __meta__ = {
@@ -32,3 +33,9 @@ polygon = PoolVector2Array( -18, 30, 0, -30, 18, 30 )
 [node name="Shooting point" type="Node2D" parent="."]
 position = Vector2( 0, 32 )
 script = ExtResource( 5 )
+
+[node name="ShootingTimer" type="Timer" parent="Shooting point"]
+wait_time = 0.125
+autostart = true
+
+[connection signal="timeout" from="Shooting point/ShootingTimer" to="Shooting point" method="_on_ShootingTimer_timeout"]
