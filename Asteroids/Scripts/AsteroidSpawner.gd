@@ -7,6 +7,7 @@ class_name AsteroidSpawner
 # var b = "text"
 export var safe_margin = 100.0
 export (float, 0, 180) var distance_factor = 30.0
+export (int, 0, 10) var asteroid_count = 7
 var asteroid_scene := preload("res://Scenes/AsteroidScene.tscn")
 var asteroid_textures_locations := [
 						"res://Assets/Asteroid/Asteroid1.png",
@@ -25,7 +26,7 @@ func _ready():
 	viewport = get_viewport().size
 	for texture_location in asteroid_textures_locations:
 		asteroid_textures.append(load(texture_location))
-	for i in range(10):
+	for i in range(asteroid_count):
 		generate_random_asteroid()
 
 func generate_random_asteroid():
@@ -37,7 +38,7 @@ func generate_random_asteroid():
 		var asteroid_position = Vector2(x, y)
 		
 		if (true):#asteroid_position.distance_to(player_position) > safe_margin):
-			spawn_asteroid(AsteroidSize.AsteroidSize.SMALL, asteroid_position, get_random_rotation(), get_random_texture(asteroid_textures))
+			spawn_asteroid(AsteroidSize.AsteroidSize.NORMAL, asteroid_position, get_random_rotation(), get_random_texture(asteroid_textures))
 			#asteroid.set_texture(asteroid_texture)
 			#add_child(asteroid)
 			break

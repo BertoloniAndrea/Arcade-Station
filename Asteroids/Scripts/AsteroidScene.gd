@@ -3,7 +3,7 @@ class_name Asteroid
 
 signal on_asteroid_destroyed(size, position, rotation)
 
-export var speed := 100.0
+export var speed := 125.0
 var vertical_movement := Vector2(0, 1)
 var rotation_factor
 var asteroid_sprite
@@ -34,12 +34,12 @@ func set_texture(asteroid_texture):
 func on_body_entered(body):
 	if body is Player:
 		body.queue_free()
-		on_destroy() 
+		#on_destroy() 
 
 func on_destroy(body_rotation = rotation):
 	queue_free()
 	if (scale_value > 0):
-		emit_signal("on_asteroid_destroyed", scale_value - 1, position, body_rotation)
+		emit_signal("on_asteroid_destroyed", scale_value - 0.5, position, body_rotation)
 
 func _on_area_entered(area):
 	if area is Bullet:

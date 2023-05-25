@@ -2,7 +2,7 @@ extends KinematicBody2D
 class_name Player
 
 export var max_speed := 100.0
-export var rotation_speed := 2.5
+export var rotation_speed := 4.0
 export var linear_velocity := 20.0
 export var friction_factor := 0.5
 export var shot_cooldown := 125
@@ -25,8 +25,6 @@ func _ready():
 func _process(_delta):
 	input_vector.x = Input.get_action_strength("RotateLeft") - Input.get_action_strength("RotateRight") # Analog stick support
 	input_vector.y = Input.get_action_strength("ForwardThrust")
-
-	var rotationDir = 0
 	
 	#MOVEMENT
 	
@@ -36,28 +34,6 @@ func _process(_delta):
 		rotation_direction = +1
 	else:
 		rotation_direction = 0
-		
-	#SHOOTING
-	
-	if Input.is_action_pressed("Shoot"):
-		shoot()
-		
-	#WORLD TORUS	
-		
-#	if position.x < 0:
-#		position.x = 1200
-#
-#	if position.x > 1200:
-#		position.x = 0
-#
-#	if position.y < 0:
-#		position.y = 800
-#
-#	if position.y > 800:
-#		position.y = 0
-##
-	#rotation += rotationDir * rotationSpeed * delta
-	#velocity = move_and_slide(velocity)
 	
 func _physics_process(delta):
 	rotation += rotation_direction * rotation_speed * delta
@@ -75,12 +51,3 @@ func decelerate(delta):
 	if (velocity.length() < 0.001):
 		velocity = Vector2.ZERO
 	velocity = lerp(velocity, Vector2.ZERO, friction_factor * delta) # linearly interpolate speed to zero
-
-func shoot():
-	pass
-#	var bullet = bullet_scene.instance() as Bullet
-#	bullet.set_rotation(rotation)
-#	bullet.set_position(position + get_node("Sprite").get_texture().get_size() / 2)
-#	get_tree().root.add_child(bullet)
-#	shootSound.play()
-#	$Timer.start(shot_cooldown)

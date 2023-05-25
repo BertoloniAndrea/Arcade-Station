@@ -1,17 +1,13 @@
 extends Node
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#get_node("Player").position
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if Input.is_action_just_pressed("Restart"):
+		load_new_scene("res://Scenes/MainScene.tscn")
+	
+	
+func load_new_scene(scene_path: String):
+	var packed_scene = load(scene_path) as PackedScene
+	var new_scene = packed_scene.instance()
+	get_tree().root.add_child(new_scene)
+	get_tree().current_scene.call_deferred("queue_free")
+	get_tree().current_scene = new_scene
