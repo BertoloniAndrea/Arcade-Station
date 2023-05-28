@@ -65,12 +65,6 @@ _global_script_class_icons={
 config/name="Asteroids"
 run/main_scene="res://Scenes/GameScene.tscn"
 
-[display]
-
-window/size/width=1200
-window/size/height=800
-window/size/resizable=false
-
 [global]
 
 layer=false

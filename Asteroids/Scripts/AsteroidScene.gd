@@ -38,7 +38,8 @@ func set_texture(asteroid_texture):
 func on_body_entered(body):
 	if body is Player:
 		pass
-		#body.call_deferred("queue_free")
+		body.emit_signal("died")
+		body.call_deferred("queue_free")
 		#on_destroy() 
 
 func on_destroy(body_rotation = rotation):

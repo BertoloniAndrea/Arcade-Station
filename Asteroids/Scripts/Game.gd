@@ -2,7 +2,7 @@ extends Node
 
 export var safe_margin = 100.0
 export (float, 0, 180) var distance_factor = 30.0
-export (int, 0, 10) var asteroid_count = 20
+export (int, 0, 10) var asteroid_count = 7
 
 onready var player = get_node("Player")
 onready var asteroid_container = get_node("Asteroid container")
