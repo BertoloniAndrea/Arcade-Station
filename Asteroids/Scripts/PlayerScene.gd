@@ -13,10 +13,8 @@ var rotation_direction: int
 var velocity := Vector2.ZERO 
 # var shotSpeed := 200
 var bullet_scene := preload("res://Scenes/BulletScene.tscn")
-var shoot_cooldown := 0.1
-
-onready var shootSound = get_node("AudioStreamPlayer")
-
+onready var thrust_sound = $AudioStreamPlayer2D
+onready var animated_sprite = $AnimatedSprite
 export(Resource) var BulletScene
 
 func _ready():
@@ -27,6 +25,14 @@ func _process(_delta):
 	input_vector.y = Input.get_action_strength("ForwardThrust")
 	
 	#MOVEMENT
+	if Input.is_action_pressed("ForwardThrust"):
+		if (not thrust_sound.playing):
+			thrust_sound.play()
+		animated_sprite.play("thrusting")
+	if Input.is_action_just_released("ForwardThrust"):
+		animated_sprite.animation = "default"
+		animated_sprite.stop()
+		thrust_sound.stop()
 	
 	if Input.is_action_pressed("RotateLeft"):
 		rotation_direction = -1
