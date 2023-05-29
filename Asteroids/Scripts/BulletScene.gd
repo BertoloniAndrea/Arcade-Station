@@ -15,7 +15,11 @@ func set_rotation(player_rotation):
 	
 func set_position(player_position):
 	position = player_position
+	
+func set_velocity(player_velocity):
+	linear_velocity += player_velocity
 
 
 func _on_screen_exited():
 	queue_free()
+	

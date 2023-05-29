@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/BulletScene.gd"
 }, {
+"base": "Node",
+"class": "LifeManager",
+"language": "GDScript",
+"path": "res://Scripts/LifeManager.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -54,6 +59,7 @@ _global_script_class_icons={
 "AsteroidSize": "",
 "AsteroidSpawner": "",
 "Bullet": "",
+"LifeManager": "",
 "Player": "",
 "Saucer": "",
 "SaucerSpawner": "",
@@ -64,6 +70,10 @@ _global_script_class_icons={
 
 config/name="Asteroids"
 run/main_scene="res://Scenes/GameScene.tscn"
+
+[display]
+
+window/size/width=800
 
 [global]
 
