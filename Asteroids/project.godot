@@ -73,7 +73,7 @@ run/main_scene="res://Scenes/GameScene.tscn"
 
 [display]
 
-window/size/width=800
+window/dpi/allow_hidpi=true
 
 [global]
 

@@ -11,8 +11,9 @@ export var shot_cooldown := 125
 
 enum Rotation {LEFT, NONE, RIGHT}
 
+var save
 var is_invincible = false
-var count = 0
+var controls_enabled = true
 var fun = true
 var e = exp(1)
 var input_vector := Vector2.ZERO 
@@ -32,9 +33,7 @@ func _ready():
 	position.y = viewport.y * 0.6
 
 func _process(_delta):
-	input_vector.x = Input.get_action_strength("RotateLeft") - Input.get_action_strength("RotateRight") # Analog stick support
-	input_vector.y = Input.get_action_strength("ForwardThrust")
-	count += 1
+	
 
 	if (fun):
 #		thrust_sound.pitch_scale = 0.8 + ((velocity.length_squared())/(velocity.length_squared() + velocity.length() + 1))
@@ -45,26 +44,27 @@ func _process(_delta):
 			thrust_sound.play()
 
 	#MOVEMENT
-
-	if Input.is_action_pressed("ForwardThrust"):
-		if (not thrust_sound.playing):
-			thrust_sound.volume_db = 0.0
-			thrust_sound.play()
-		animated_sprite.play("thrusting")
-	if Input.is_action_just_released("ForwardThrust"):
-		animated_sprite.animation = "default"
-		animated_sprite.stop()
-		if (!fun):
-			thrust_sound.volume_db = -80.0
-	if Input.is_action_pressed("RotateLeft"):
-		rotation_direction = -1
-	elif Input.is_action_pressed("RotateRight"):
-		rotation_direction = +1
-	else:
-		rotation_direction = 0
+	
+	if (controls_enabled):
+		input_vector.x = Input.get_action_strength("RotateLeft") - Input.get_action_strength("RotateRight") # Analog stick support
+		input_vector.y = Input.get_action_strength("ForwardThrust")
+		if Input.is_action_pressed("ForwardThrust"):
+			animated_sprite.play("thrusting")
+		if Input.is_action_just_released("ForwardThrust"):
+			animated_sprite.animation = "default"
+			animated_sprite.stop()
+		if Input.is_action_pressed("RotateLeft"):
+			rotation_direction = -1
+		elif Input.is_action_pressed("RotateRight"):
+			rotation_direction = +1
+		else:
+			rotation_direction = 0
 
 func _physics_process(delta):
 	rotation += rotation_direction * rotation_speed * delta
+	if (rotation > 2 * PI):
+		save = rotation - 2 * PI
+		rotation = save
 	if (input_vector.y > 0):
 		accelerate(delta)
 	elif (input_vector.y == 0 and velocity != Vector2.ZERO):
@@ -73,21 +73,12 @@ func _physics_process(delta):
 
 func start_invincibility():
 	is_invincible = true
-	get_node("Blinking timer").start()
-	get_node("Invincibility timer").start()
-
-func bstop_invincibility():
-	is_invincible = false
-	animated_sprite.visible = true
-	blinking_timer.stop()
-	invincibility_timer.stop()
-
-func btoggle_visibility():
-	animated_sprite.visible = !animated_sprite.visible
+	blinking_timer.start()
+	invincibility_timer.start()
 
 func accelerate(delta):
 	velocity += (input_vector * linear_velocity * delta).rotated(rotation)
-	velocity.limit_length(max_speed)
+	velocity = velocity.limit_length(max_speed)
 
 func decelerate(delta):
 	if (velocity.length() < 0.001):
@@ -102,5 +93,11 @@ func stop_invincibility():
 	animated_sprite.visible = true
 	blinking_timer.stop()
 	invincibility_timer.stop()
-	print("hi")
-
+	
+func disable_controls():
+	rotation_direction = 0
+	velocity = Vector2.ZERO
+	controls_enabled = false
+	
+func enable_controls():
+	controls_enabled = true

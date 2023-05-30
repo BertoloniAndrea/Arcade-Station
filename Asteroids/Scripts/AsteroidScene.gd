@@ -40,21 +40,15 @@ func set_texture(asteroid_texture):
 
 func on_body_entered(body):
 	if body is Player:
-		if (!(body as Player).is_invincible):
+		if (!body.is_invincible):
 			destroy_sound.play()
 			body.emit_signal("died")
-			body.call_deferred("queue_free")
+			#body.call_deferred("queue_free")
 
 func on_destroy(body_rotation = rotation):
 	if (not destroyed):
 		emit_signal("on_asteroid_destroyed", size, position, body_rotation)
 	call_deferred("queue_free")
-
-
-func reparent(child: Node, new_parent: Node):
-	var old_parent = child.get_parent()
-	old_parent.remove_child(child)
-	new_parent.add_child(child)
 
 func _on_area_entered(area):
 	if area is Bullet:

@@ -13,7 +13,8 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_pressed("Shoot"):
 		if (can_shoot): #can_shoot
-			shoot_sound.play()			
+			shooting_timer.start()
+			shoot_sound.play()
 			var bullet = bullet_scene.instance() as Bullet
 			bullet.set_position(global_position)
 			bullet.set_rotation(get_parent().rotation)

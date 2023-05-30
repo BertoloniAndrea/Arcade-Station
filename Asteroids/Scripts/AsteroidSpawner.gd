@@ -26,7 +26,7 @@ func _ready():
 	viewport = get_viewport().size
 	for texture_location in asteroid_textures_locations:
 		asteroid_textures.append(load(texture_location))
-	for i in range(asteroid_count):
+	for _i in range(asteroid_count):
 		generate_random_asteroid()
 
 func generate_random_asteroid() -> Asteroid:
@@ -54,7 +54,7 @@ func get_random_rotation() -> float:
 
 func spawn_asteroid(size, position: Vector2, rotation) -> Asteroid:
 	var asteroid = asteroid_scene.instance() as Asteroid
-	var asteroid_sprite = asteroid.get_node("Sprite")
+#	var asteroid_sprite = asteroid.get_node("Sprite")
 #	var scale_value = size + 1.0
 	asteroid.position = position
 	asteroid.rotation = rotation

@@ -3,10 +3,13 @@ extends Node
 export var safe_margin = 200.0
 export (float, 0, 180) var distance_factor = 30.0
 export (int, 0, 10) var asteroid_count = 7
-export(int, 0, 10) var lives = 3
+export(int, 0, 10) var lives = 8
 
 var player_scene = preload("res://Scenes/PlayerScene.tscn")
-var player
+onready var player = get_node("Player")
+var starting_position
+
+onready var viewport = OS.window_size
 
 onready var asteroid_container = get_node("Asteroid container")
 onready var asteroid_spawner = get_node("Asteroid spawner") as AsteroidSpawner
@@ -26,7 +29,8 @@ var score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	start_new_game()
+	start_new_game(true, false)
+	player.connect("died", self, "life_manager")
 #	player.connect("died", self, "life_manager")
 #	for _i in range(asteroid_count):
 #		asteroid = asteroid_spawner.generate_random_asteroid()
@@ -39,7 +43,10 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _process(_delta):
+func _process(delta):
+	if (asteroid_container.get_child_count() == 0):
+		move_to_new_level(delta)
+		#start_new_game()
 	if Input.is_action_just_pressed("Restart"):
 		load_new_scene("res://Scenes/GameScene.tscn")
 	
@@ -75,21 +82,22 @@ func on_asteroid_destroyed(size, position: Vector2, rotation):
 	hud.set_score(score)
 	
 func life_manager():
-	lives -=1
-	if true:
-		player = player_scene.instance()
-		player.start_invincibility()
-		player.connect("died", self, "life_manager")
-		add_child(player)
-	pass
+	lives -= 1
+	hud.clear_children()
+	if lives > 0:
+		for _life in range(lives):
+			hud.add_life()
+		initialize_player()
+
+func start_new_game(level, move_to_new_level = false):
+	starting_position = Vector2(OS.window_size.x/2, OS.window_size.y * 0.6)
+
+	hud.clear_children()
+	for _life in range(lives):
+		hud.add_life()
+
+	initialize_player()
 	
-func start_new_game():
-	for asteroid in asteroid_container.get_children():
-		asteroid.call_deferred("queue_free")
-	player = player_scene.instance()
-	#player.start_invincibility()
-	player.connect("died", self, "life_manager")
-	add_child(player)
 	for _i in range(asteroid_count):
 		while true:
 			asteroid = asteroid_spawner.generate_random_asteroid()
@@ -97,9 +105,24 @@ func start_new_game():
 				break
 		asteroid.connect("on_asteroid_destroyed", self, "on_asteroid_destroyed")
 		asteroid_container.add_child(asteroid)
-	
+		
+func initialize_player():
+	player.position = starting_position
+	player.start_invincibility()
+	player.enable_controls()
+
+func move_to_new_level(delta):
+	var lerp_finished = false
+	player.disable_controls()
+	if player.position.distance_to(starting_position) < 0.5 && abs(player.rotation - PI) < 0.5:
+		lerp_finished = true
+	if (!lerp_finished):
+		player.position = lerp(player.position, starting_position, delta * 4)
+		player.rotation = lerp(player.rotation, PI, delta * 4)
+	else:
+		start_new_game(true, true)
 
 func spawn_asteroid(size, position, rotation):
 	asteroid = asteroid_spawner.spawn_asteroid(size, position, rotation)
 	asteroid.connect("on_asteroid_destroyed", self, "on_asteroid_destroyed")
-	asteroid_container.add_child(asteroid)
+	asteroid_container.call_deferred("add_child", asteroid)

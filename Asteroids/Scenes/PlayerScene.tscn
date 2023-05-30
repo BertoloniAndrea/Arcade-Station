@@ -55,7 +55,7 @@ stream = ExtResource( 3 )
 volume_db = -16.605
 
 [node name="ShootingTimer" type="Timer" parent="Shooting point"]
-wait_time = 0.125
+wait_time = 0.25
 autostart = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -64,9 +64,10 @@ frames = SubResource( 1 )
 animation = "thrusting"
 
 [node name="Blinking timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 
 [node name="Invincibility timer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [connection signal="timeout" from="Shooting point/ShootingTimer" to="Shooting point" method="_on_ShootingTimer_timeout"]
