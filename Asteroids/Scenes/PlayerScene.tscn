@@ -64,7 +64,7 @@ frames = SubResource( 1 )
 animation = "thrusting"
 
 [node name="Blinking timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 
 [node name="Invincibility timer" type="Timer" parent="."]
 wait_time = 3.0

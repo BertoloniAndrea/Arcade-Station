@@ -33,8 +33,6 @@ func _ready():
 	position.y = viewport.y * 0.6
 
 func _process(_delta):
-	
-
 	if (fun):
 #		thrust_sound.pitch_scale = 0.8 + ((velocity.length_squared())/(velocity.length_squared() + velocity.length() + 1))
 #		thrust_sound.pitch_scale = 0.9 + (log(1 + velocity.length()) / log(50))
@@ -61,15 +59,17 @@ func _process(_delta):
 			rotation_direction = 0
 
 func _physics_process(delta):
-	rotation += rotation_direction * rotation_speed * delta
-	if (rotation > 2 * PI):
-		save = rotation - 2 * PI
-		rotation = save
-	if (input_vector.y > 0):
-		accelerate(delta)
-	elif (input_vector.y == 0 and velocity != Vector2.ZERO):
-		decelerate(delta)
-	move_and_collide(velocity)
+	if (controls_enabled):
+		rotation += rotation_direction * rotation_speed * delta
+#		print((180/PI) * rotation) 
+	#	if (rotation > 2 * PI):
+	#		save = rotation - 2 * PI
+	#		rotation = save
+		if (input_vector.y > 0):
+			accelerate(delta)
+		elif (input_vector.y == 0 and velocity != Vector2.ZERO):
+			decelerate(delta)
+		move_and_collide(velocity)
 
 func start_invincibility():
 	is_invincible = true
@@ -95,9 +95,14 @@ func stop_invincibility():
 	invincibility_timer.stop()
 	
 func disable_controls():
+	controls_enabled = false
+	#reset_movement()
+	
+func reset_movement():
 	rotation_direction = 0
 	velocity = Vector2.ZERO
-	controls_enabled = false
+	animated_sprite.play("default")
+	animated_sprite.stop()
 	
 func enable_controls():
 	controls_enabled = true
