@@ -6,7 +6,7 @@ signal score(score)
 
 onready var destroy_sound = get_node("AudioStreamPlayer2D")
 export(AudioStream) var player_died_stream 
-export var speed := 125.0
+export var speed := 175.0
 var vertical_movement := Vector2(0, 1)
 var rotation_factor
 var asteroid_sprite
@@ -43,10 +43,10 @@ func on_body_entered(body):
 		if (!body.is_invincible):
 			destroy_sound.play()
 			body.emit_signal("died")
-			#body.call_deferred("queue_free")
 
 func on_destroy(body_rotation = rotation):
 	if (not destroyed):
+		destroyed = true
 		emit_signal("on_asteroid_destroyed", size, position, body_rotation)
 	call_deferred("queue_free")
 

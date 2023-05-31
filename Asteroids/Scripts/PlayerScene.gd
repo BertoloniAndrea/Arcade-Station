@@ -5,7 +5,7 @@ signal died
 
 export var max_speed := 100.0
 export var rotation_speed := 4.0
-export var linear_velocity := 7.0
+export var linear_velocity := 15.0
 export var friction_factor := 0.5
 export var shot_cooldown := 125
 
@@ -28,6 +28,7 @@ onready var invincibility_timer = $"Invincibility timer" as Timer
 onready var viewport = OS.window_size
 
 func _ready():
+	rotation_speed = linear_velocity/PI
 	rotation = PI
 	position.x = viewport.x / 2
 	position.y = viewport.y * 0.6
@@ -81,7 +82,7 @@ func accelerate(delta):
 	velocity = velocity.limit_length(max_speed)
 
 func decelerate(delta):
-	if (velocity.length() < 0.001):
+	if (velocity.length() < 0.1):
 		velocity = Vector2.ZERO
 	velocity = lerp(velocity, Vector2.ZERO, friction_factor * delta) # linearly interpolate speed to zero
 

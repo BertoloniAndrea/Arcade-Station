@@ -58,7 +58,7 @@ func spawn_asteroid(size, position: Vector2, rotation) -> Asteroid:
 #	var scale_value = size + 1.0
 	asteroid.position = position
 	asteroid.rotation = rotation
-	asteroid.rotation_factor = randf() * 60
+	asteroid.rotation_factor = randf() * 120 - 60
 	asteroid.set_texture(get_random_texture())
 #	asteroid.scale_value = size
 	asteroid.size = size

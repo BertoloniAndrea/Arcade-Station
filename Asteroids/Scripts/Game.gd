@@ -5,11 +5,10 @@ signal teleport_finished
 export var safe_margin = 200.0
 export (float, 0, 180) var distance_factor = 30.0
 export (int, 0, 10) var initial_asteroid_count = 7
-export(int, 0, 10) var lives = 5
+export(int, 0, 10) var lives = 8
 
 var player_scene = preload("res://Scenes/PlayerScene.tscn")
 onready var player = get_node("Player")
-
 
 onready var viewport = OS.window_size
 
@@ -36,10 +35,9 @@ var asteroid_count = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	start_new_game(asteroid_count)
+	move_to_new_level()
+#	start_new_game(0)
 	player.connect("died", self, "life_manager")
-	
-	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -98,7 +96,7 @@ func life_manager():
 
 func move_to_new_level():
 	level += 1
-	asteroid_count = initial_asteroid_count + pow(level, 3/2)
+	asteroid_count = initial_asteroid_count + pow(level, 2)
 	hud.set_level(level)
 	level_timer.start()
 	start_new_game(asteroid_count)
