@@ -28,6 +28,7 @@ var asteroid
 var score = 0
 var level = 0
 var asteroid_count = 0
+var target = PI
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -46,8 +47,15 @@ func _ready():
 
 func _process(delta):
 	if (player_is_teleporting):
+		if (player.rotation < 0):
+			print("negative")
+			target = -PI
+		else:
+			print("positive")
+			target = PI
 		teleport_player(delta)
 	if (asteroid_container.get_child_count() == 0):
+
 		move_to_new_level()
 	if Input.is_action_just_pressed("Restart"):
 		load_new_scene("res://Scenes/GameScene.tscn")
@@ -126,13 +134,14 @@ func initialize_player():
 
 
 func teleport_player(delta):
-	if player.position.distance_to(starting_position) < 0.5 && abs(player.rotation - PI) < 0.1:
+	if player.position.distance_to(starting_position) < 0.5 && abs(player.rotation - target) < 0.01:
 		player_is_teleporting = false
 		player.start_invincibility()
 		player.enable_controls()
-	player.position = lerp(player.position, starting_position, delta * 5)
-	player.rotation = lerp(player.rotation, PI, delta * 5)
-
+	
+	player.position = lerp(player.position, starting_position, delta * 6)
+	player.rotation = lerp(player.rotation, target, delta * 6)
+#	print(str((180/PI) * player.rotation) + str(target)) 
 func spawn_asteroid(size, position, rotation):
 	asteroid = asteroid_spawner.spawn_asteroid(size, position, rotation)
 	asteroid.connect("on_asteroid_destroyed", self, "on_asteroid_destroyed")
