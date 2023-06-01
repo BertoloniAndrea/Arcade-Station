@@ -1,5 +1,6 @@
 extends Node
 
+var viewport
 var wrapArea = null
 var spriteSize
 var halfSpriteSize
@@ -13,7 +14,7 @@ var AXIS = {
 
 # Initialise the wrap area to screen size if not set
 func initWrapArea():
-	var viewport := get_viewport().size
+	viewport = OS.window_size
 	if wrapArea == null:
 		wrapArea = Rect2(Vector2.ZERO, viewport + halfSpriteSize)
 
@@ -26,7 +27,9 @@ func _ready():
 
 # Check whether the parent object is NOT in the wrap area,
 # call the wrap function if it isn't
-func _process(delta):
+func _process(_delta):
+	#viewport = OS.window_size
+	#wrapArea = Rect2(Vector2.ZERO, viewport + halfSpriteSize)
 	if !wrapArea.has_point(get_parent().global_position):
 		wrap()
 
