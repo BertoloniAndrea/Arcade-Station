@@ -29,12 +29,13 @@ onready var viewport = OS.window_size
 
 func _ready():
 	rotation_speed = linear_velocity/PI
-	rotation = PI
-	position.x = viewport.x / 2
-	position.y = viewport.y * 0.6
+	#rotation = PI
+	#position.x = viewport.x / 2
+	#position.y = viewport.y * 0.6
 
 func _process(_delta):
 	if (fun):
+#		pass
 #		thrust_sound.pitch_scale = 0.8 + ((velocity.length_squared())/(velocity.length_squared() + velocity.length() + 1))
 #		thrust_sound.pitch_scale = 0.9 + (log(1 + velocity.length()) / log(50))
 		thrust_sound.pitch_scale = (velocity.length() + 1) / max_speed + 0.9
@@ -49,6 +50,9 @@ func _process(_delta):
 		input_vector.y = Input.get_action_strength("ForwardThrust")
 		if Input.is_action_pressed("ForwardThrust"):
 			animated_sprite.play("thrusting")
+#			if (not thrust_sound.playing):
+##			thrust_sound.volume_db = 0.0
+#				thrust_sound.play()
 		if Input.is_action_just_released("ForwardThrust"):
 			animated_sprite.animation = "default"
 			animated_sprite.stop()

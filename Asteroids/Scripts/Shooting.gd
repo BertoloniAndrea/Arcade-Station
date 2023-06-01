@@ -20,6 +20,7 @@ func _process(_delta):
 			bullet.set_velocity(get_parent().velocity.length()*50)
 			get_tree().root.add_child(bullet)
 			can_shoot = false
+			
 
 func _on_ShootingTimer_timeout():
 	can_shoot = true

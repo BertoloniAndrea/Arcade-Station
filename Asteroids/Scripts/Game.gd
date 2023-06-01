@@ -39,23 +39,17 @@ func _ready():
 	move_to_new_level()
 #	start_new_game(0)
 	player.connect("died", self, "life_manager")
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	pass
 
 func _process(delta):
 	if (player_is_teleporting):
 		if (player.rotation < 0):
-			print("negative")
 			target = -PI
 		else:
-			print("positive")
 			target = PI
 		teleport_player(delta)
 	if (asteroid_container.get_child_count() == 0):
-
+#		pass
 		move_to_new_level()
 	if Input.is_action_just_pressed("Restart"):
 		load_new_scene("res://Scenes/GameScene.tscn")
@@ -81,7 +75,6 @@ func on_asteroid_destroyed(size, position: Vector2, rotation):
 				destroy_sound.stream = big_asteroid_stream
 			_:
 				destroy_sound.stream = big_asteroid_stream
-
 		spawn_asteroid(size, position, rotation + (distance_factor * PI / 180))
 		spawn_asteroid(size, position, rotation - (distance_factor * PI / 180))
 		destroy_sound.play()
