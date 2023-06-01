@@ -4,6 +4,7 @@ onready var score_label = get_node("Score/Label")
 onready var lives_container = get_node("Score/Lives container")
 onready var level_label = get_node("Score/Level")
 onready var game_over_label = get_node("Score/Game over")
+
 var life_scene = preload("res://Scenes/Life.tscn")
 var wrap_after = 5
 var last_h_container_index = -1
@@ -24,7 +25,7 @@ func set_level(level):
 func set_score(score):
 	var score_value = str(score)
 	if (score_value.length() > digits):
-		digits += 1
+		digits += 2
 	score_value = "0".repeat(digits - score_value.length()) + score_value
 	score_label.text = score_value
 
@@ -58,7 +59,6 @@ func clear_children():
 	for l in lives_container.get_children():
 		lives_container.remove_child(l)
 		l.queue_free()
-	print(lives_container.get_children())
 	last_h_container_index = -1
 	last_life_index = 0
 	

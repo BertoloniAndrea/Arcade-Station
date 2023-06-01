@@ -21,5 +21,11 @@ func set_velocity(player_velocity):
 
 
 func _on_screen_exited():
-	queue_free()
+	pass
+#	call_deferred("queue_free")
 	
+
+
+func _on_timeout():
+	call_deferred("queue_free")
+
